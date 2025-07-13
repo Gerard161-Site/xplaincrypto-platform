@@ -1,0 +1,13 @@
+xplaincrypto-infra/
+xplaincrypto-fastapi/
+xplaincrypto-mindsdb/
+xplaincrypto-database/
+xplaincrypto-mcp/
+xplaincrypto-docs/
+xplaincrypto-n8n/
+xplaincrypto-researcher/
+mindsdb-handlers
+.cursor/
+
+*.tmp
+*.log
