@@ -7,7 +7,10 @@ xplaincrypto-docs/
 xplaincrypto-n8n/
 xplaincrypto-researcher/
 mindsdb-handlers
+xplaincrypto-mcp-servers/
+xplaincrypto-mcp-servers/coingeko_mcp/
 .cursor/
+orchestrator-bridge/
 
 *.tmp
 *.log
