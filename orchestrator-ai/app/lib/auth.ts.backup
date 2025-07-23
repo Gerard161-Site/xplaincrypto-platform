@@ -1,0 +1,95 @@
+import { NextAuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
+
+// Lazy initialization of Prisma client to avoid build-time issues
+let prisma: PrismaClient | null = null;
+
+function getPrismaClient() {
+    try {
+      prisma = new PrismaClient();
+    } catch (error) {
+      console.warn('Prisma client initialization failed:', error);
+      return null;
+    }
+  }
+  return prisma;
+}
+
+export const authOptions: NextAuthOptions = {
+  // Conditionally use Prisma adapter only when Prisma is available
+  adapter: (() => {
+    const client = getPrismaClient();
+    return client ? PrismaAdapter(client) : undefined;
+  })(),
+  
+  providers: [
+    CredentialsProvider({
+      name: 'credentials',
+      credentials: {
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' }
+      },
+      async authorize(credentials) {
+          return null;
+        }
+
+        const client = getPrismaClient();
+          console.warn('Database not available for authentication');
+          return null;
+        }
+
+        try {
+          const user = await client.user.findUnique({
+            where: {
+              email: credentials.email
+            }
+          });
+
+            return null;
+          }
+
+          const isPasswordValid = await bcrypt.compare(
+            credentials.password,
+            user.password
+          );
+
+            return null;
+          }
+
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name || undefined,
+            role: user.role,
+          };
+        } catch (error) {
+          console.error('Authentication error:', error);
+          return null;
+        }
+      }
+    })
+  ],
+  session: {
+    strategy: 'jwt',
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.role = user.role;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token && session.user) {
+        session.user.role = token.role;
+      }
+      return session;
+    },
+  },
+  pages: {
+    signIn: '/login',
+  },
+};
