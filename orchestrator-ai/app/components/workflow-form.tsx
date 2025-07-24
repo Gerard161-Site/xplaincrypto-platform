@@ -57,31 +57,33 @@ export function WorkflowForm({ onWorkflowStart, isLoading, setIsLoading }: Workf
 
       const result = await response.json();
       
-      if (result.success) {
-        const workflowId = result.workflow_id || 'unknown';
-        const workflow: Workflow = {
-          id: workflowId,
-          githubUrl: formData.githubUrl,
-          prompt: formData.prompt,
-          mode: formData.mode,
-          status: 'pending',
-          progress: 0,
-          userId: '',
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        };
-        onWorkflowStart(workflow);
-        
-        setFormData({
-          githubUrl: '',
-          prompt: '',
-          mode: 'self-contained',
-        });
-        
-        toast.success(`Workflow started! ID: ${workflowId}`);
-      } else {
+      if (!result.success) {
         throw new Error(result.error || 'Failed to start workflow');
       }
+
+      const workflowId = result.workflow_id || 'unknown';
+      const mockWorkflow: Workflow = {
+        id: workflowId,
+        githubUrl: formData.githubUrl,
+        prompt: formData.prompt,
+        mode: formData.mode,
+        status: 'pending',
+        progress: 0,
+        userId: '',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      onWorkflowStart(mockWorkflow);
+
+      setFormData({
+        githubUrl: '',
+        prompt: '',
+        mode: 'self-contained',
+      });
+
+      toast.success('Workflow started successfully!');
+
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An error occurred';
       setError(errorMessage);

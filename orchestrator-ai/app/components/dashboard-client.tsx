@@ -6,7 +6,7 @@ import { useSession, signOut } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { LogOut, Terminal, Activity } from 'lucide-react';
-import { WorkflowForm } from '@/components/workflow-form';
+// import { WorkflowForm } from '@/components/workflow-form';
 import { ProgressPanel } from '@/components/progress-panel';
 import { WorkflowHistory } from '@/components/workflow-history';
 import { Workflow } from '@/lib/types';
@@ -104,11 +104,10 @@ export default function DashboardClient() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <WorkflowForm
-                onWorkflowStart={handleWorkflowStart}
-                isLoading={isLoading}
-                setIsLoading={setIsLoading}
-              />
+              <div className="text-center py-8">
+                <p className="text-gray-400">Workflow form temporarily disabled while fixing styling</p>
+                <p className="text-sm text-gray-500 mt-2">Testing orange theme...</p>
+              </div>
             </CardContent>
           </Card>
 

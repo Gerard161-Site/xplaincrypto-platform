@@ -3,6 +3,73 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary-orange: #ff6b35;
+  --secondary-orange: #ff8c42;
+  --dark-bg: #0a0a0a;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+}
+
+body {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%) !important;
+  color: var(--text-primary) !important;
+  font-family: 'Inter', sans-serif !important;
+  min-height: 100vh;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange)) !important;
+  color: white !important;
+}
+
+.card {
+  background: var(--card-bg) !important;
+  border: 1px solid rgba(255, 107, 53, 0.2) !important;
+  border-radius: 12px !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange)) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  color: white !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 25px rgba(255, 107, 53, 0.3) !important;
+}
+
+/* Override specific Tailwind classes */
+.bg-gradient-to-br {
+  background: linear-gradient(135deg, #111827 0%, #000000 50%, #111827 100%) !important;
+}
+
+.bg-slate-800\/50,
+.bg-slate-800 {
+  background: var(--card-bg) !important;
+}
+
+.border-slate-700,
+.border-slate-600 {
+  border-color: rgba(255, 107, 53, 0.2) !important;
+}
+
+.text-purple-400 {
+  color: #ff8c42 !important;
+}
+
+.bg-purple-600 {
+  background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange)) !important;
+}
+
 @layer base {
   :root {
     --background: 222.2 84% 4.9%;
