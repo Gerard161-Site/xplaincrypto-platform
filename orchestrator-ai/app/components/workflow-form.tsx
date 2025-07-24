@@ -43,12 +43,18 @@ export function WorkflowForm({ onWorkflowStart, isLoading, setIsLoading }: Workf
         throw new Error('Prompt is required for prompt-driven mode');
       }
 
+      // Map frontend field names to backend API field names
+      const apiData = {
+        repository_url: formData.githubUrl,
+        task_prompt: formData.prompt,
+      };
+
       const response = await fetch('/api/workflow', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(apiData),
       });
 
       const result = await response.json();
@@ -57,9 +63,10 @@ export function WorkflowForm({ onWorkflowStart, isLoading, setIsLoading }: Workf
         throw new Error(result.error || 'Failed to start workflow');
       }
 
-      // Create a mock workflow object for the callback
+      // Create workflow object for the callback - handle both response formats
+      const workflowId = result.workflow_id || result.data?.workflowId || 'unknown';
       const mockWorkflow: Workflow = {
-        id: result.data.workflowId,
+        id: workflowId,
         githubUrl: formData.githubUrl,
         prompt: formData.prompt,
         mode: formData.mode,
@@ -78,6 +85,8 @@ export function WorkflowForm({ onWorkflowStart, isLoading, setIsLoading }: Workf
         prompt: '',
         mode: 'self-contained',
       });
+
+      toast.success('Workflow started successfully!');
 
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An error occurred';
@@ -107,78 +116,82 @@ export function WorkflowForm({ onWorkflowStart, isLoading, setIsLoading }: Workf
 
       {/* GitHub URL Input */}
       <div className="space-y-2">
-        <Label htmlFor="githubUrl" className="text-slate-300 flex items-center">
+        <Label htmlFor="githubUrl" className="text-white flex items-center">
           <Github className="h-4 w-4 mr-2" />
           GitHub Repository URL
         </Label>
         <Input
           id="githubUrl"
           type="url"
-          placeholder="https://github.com/username/repository"
           value={formData.githubUrl}
           onChange={(e) => setFormData(prev => ({ ...prev, githubUrl: e.target.value }))}
+          placeholder="https://github.com/username/repository"
+          className="bg-slate-800 border-slate-600 text-white placeholder-slate-400"
           required
-          className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400"
         />
       </div>
 
       {/* Mode Toggle */}
-      <Card className="bg-slate-700/50 border-slate-600">
-        <CardContent className="pt-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <Code className="h-5 w-5 text-purple-400" />
-              <div>
-                <Label className="text-slate-300 font-medium">
-                  {formData.mode === 'self-contained' ? 'Self-contained Analysis' : 'Prompt-driven Mode'}
-                </Label>
-                <p className="text-sm text-slate-400">
-                  {formData.mode === 'self-contained' 
-                    ? 'Automatic analysis and recommendations' 
-                    : 'Custom task with specific instructions'
-                  }
-                </p>
-              </div>
-            </div>
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <Label htmlFor="mode-toggle" className="text-white flex items-center">
+            <Code className="h-4 w-4 mr-2" />
+            Workflow Mode
+          </Label>
+          <div className="flex items-center space-x-2">
+            <span className={`text-sm ${formData.mode === 'self-contained' ? 'text-white' : 'text-slate-400'}`}>
+              Self-contained
+            </span>
             <Switch
+              id="mode-toggle"
               checked={formData.mode === 'prompt-driven'}
               onCheckedChange={handleModeChange}
-              className="data-[state=checked]:bg-purple-600"
             />
+            <span className={`text-sm ${formData.mode === 'prompt-driven' ? 'text-white' : 'text-slate-400'}`}>
+              Prompt-driven
+            </span>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+
+        <Card className="bg-slate-700/50 border-slate-600">
+          <CardContent className="pt-4">
+            <p className="text-sm text-slate-300">
+              {formData.mode === 'self-contained' 
+                ? "Automatically analyze and deploy the repository based on detected patterns and configurations."
+                : "Use a custom prompt to guide the multi-agent workflow for specific tasks and objectives."
+              }
+            </p>
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Prompt Input (conditional) */}
       {formData.mode === 'prompt-driven' && (
         <div className="space-y-2">
-          <Label htmlFor="prompt" className="text-slate-300 flex items-center">
+          <Label htmlFor="prompt" className="text-white flex items-center">
             <MessageSquare className="h-4 w-4 mr-2" />
-            Task Instructions
+            Task Prompt
           </Label>
           <Textarea
             id="prompt"
-            placeholder="Describe what you want the agents to do with this repository..."
             value={formData.prompt}
             onChange={(e) => setFormData(prev => ({ ...prev, prompt: e.target.value }))}
-            rows={4}
-            className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-400 resize-none"
+            placeholder="Describe what you want the AI agents to accomplish..."
+            className="bg-slate-800 border-slate-600 text-white placeholder-slate-400 min-h-[100px]"
+            required={formData.mode === 'prompt-driven'}
           />
-          <p className="text-xs text-slate-500">
-            Provide specific instructions for the multi-agent system to follow
-          </p>
         </div>
       )}
 
       {/* Submit Button */}
       <Button
         type="submit"
-        className="w-full bg-purple-600 hover:bg-purple-700 text-white"
         disabled={isLoading}
+        className="w-full bg-purple-600 hover:bg-purple-700 text-white"
       >
         {isLoading ? (
           <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
             Starting Workflow...
           </>
         ) : (
