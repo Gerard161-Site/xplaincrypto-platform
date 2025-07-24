@@ -8,9 +8,9 @@ import { Providers } from '@/components/providers';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'DevOps Orchestrator - Multi-Agent System',
-  description: 'Professional multi-agent orchestration platform for automated DevOps workflows',
-  keywords: ['DevOps', 'Automation', 'Multi-Agent', 'Orchestration', 'GitHub', 'Workflows'],
+  title: 'Automotas AI - Multi-Agent Orchestrator',
+  description: 'Advanced AI orchestration platform for automated workflows and intelligent agent management',
+  keywords: ['AI', 'Automation', 'Multi-Agent', 'Orchestration', 'GitHub', 'Workflows', 'Automotas'],
 };
 
 export default function RootLayout({

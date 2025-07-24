@@ -5,8 +5,8 @@ import { useState, useEffect } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { LogOut, Terminal, Activity } from 'lucide-react';
-// import { WorkflowForm } from '@/components/workflow-form';
+import { LogOut, Terminal, Activity, Github } from 'lucide-react';
+
 import { ProgressPanel } from '@/components/progress-panel';
 import { WorkflowHistory } from '@/components/workflow-history';
 import { Workflow } from '@/lib/types';
@@ -104,9 +104,13 @@ export default function DashboardClient() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="text-center py-8">
-                <p className="text-gray-400">Workflow form temporarily disabled while fixing styling</p>
-                <p className="text-sm text-gray-500 mt-2">Testing orange theme...</p>
+              <div className="text-center py-8 space-y-4">
+                <div className="gradient-bg w-16 h-16 rounded-lg flex items-center justify-center mx-auto">
+                  <Github className="h-8 w-8 text-white" />
+                </div>
+                <h3 className="text-xl font-semibold text-white">Orange Theme Test</h3>
+                <p className="text-gray-400">Testing the new Automotas AI orange styling</p>
+                <Button className="btn-primary">Test Orange Button</Button>
               </div>
             </CardContent>
           </Card>

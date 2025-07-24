@@ -128,13 +128,14 @@ body {
   animation: progress 0.5s ease-out;
 }
 
-/* Custom gradient backgrounds */
+/* Custom gradient backgrounds - ORANGE THEME */
 .gradient-bg {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange)) !important;
+  color: white !important;
 }
 
 .gradient-purple {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange)) !important;
 }
 
 /* Loading shimmer effect */
@@ -198,7 +199,10 @@ body {
 
 /* Typography enhancements */
 .text-gradient {
-  @apply bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent;
+  background: linear-gradient(to right, var(--primary-orange), var(--secondary-orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* Layout utilities */
