@@ -46,48 +46,47 @@ export function WorkflowForm({ onWorkflowStart, isLoading, setIsLoading }: Workf
       // Map frontend field names to backend API field names
       const apiData = {
         repository_url: formData.githubUrl,
-        task_prompt: formData.prompt,
+        task_prompt: formData.mode === 'prompt-driven' ? formData.prompt : 'Analyze and understand this repository',
       };
 
       const response = await fetch('/api/workflow', {
         method: 'POST',
-        headers: {
+        headers: { 
           'Content-Type': 'application/json',
+          'X-API-Key': 'xplaincrypto-api-key'
         },
         body: JSON.stringify(apiData),
       });
 
       const result = await response.json();
-
-      if (!result.success) {
+      
+      if (result.success) {
+        // Handle the backend response format
+        const workflowId = result.workflow_id || 'unknown';
+        const workflow: Workflow = {
+          id: workflowId,
+          githubUrl: formData.githubUrl,
+          prompt: formData.prompt,
+          mode: formData.mode,
+          status: 'pending',
+          progress: 0,
+          userId: '',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        };
+        onWorkflowStart(workflow);
+        
+        // Reset form
+        setFormData({
+          githubUrl: '',
+          prompt: '',
+          mode: 'self-contained',
+        });
+        
+        toast.success('Workflow started! ID: ' + workflowId);
+      } else {
         throw new Error(result.error || 'Failed to start workflow');
       }
-
-      // Create workflow object for the callback - handle both response formats
-      const workflowId = result.workflow_id || result.data?.workflowId || 'unknown';
-      const mockWorkflow: Workflow = {
-        id: workflowId,
-        githubUrl: formData.githubUrl,
-        prompt: formData.prompt,
-        mode: formData.mode,
-        status: 'pending',
-        progress: 0,
-        userId: '',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-
-      onWorkflowStart(mockWorkflow);
-
-      // Reset form
-      setFormData({
-        githubUrl: '',
-        prompt: '',
-        mode: 'self-contained',
-      });
-
-      toast.success('Workflow started successfully!');
-
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An error occurred';
       setError(errorMessage);
@@ -114,7 +113,6 @@ export function WorkflowForm({ onWorkflowStart, isLoading, setIsLoading }: Workf
         </Alert>
       )}
 
-      {/* GitHub URL Input */}
       <div className="space-y-2">
         <Label htmlFor="githubUrl" className="text-white flex items-center">
           <Github className="h-4 w-4 mr-2" />
@@ -131,7 +129,6 @@ export function WorkflowForm({ onWorkflowStart, isLoading, setIsLoading }: Workf
         />
       </div>
 
-      {/* Mode Toggle */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <Label htmlFor="mode-toggle" className="text-white flex items-center">
@@ -165,7 +162,6 @@ export function WorkflowForm({ onWorkflowStart, isLoading, setIsLoading }: Workf
         </Card>
       </div>
 
-      {/* Prompt Input (conditional) */}
       {formData.mode === 'prompt-driven' && (
         <div className="space-y-2">
           <Label htmlFor="prompt" className="text-white flex items-center">
@@ -183,7 +179,6 @@ export function WorkflowForm({ onWorkflowStart, isLoading, setIsLoading }: Workf
         </div>
       )}
 
-      {/* Submit Button */}
       <Button
         type="submit"
         disabled={isLoading}
