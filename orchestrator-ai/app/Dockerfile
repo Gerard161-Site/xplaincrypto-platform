@@ -26,6 +26,9 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
+# Generate Prisma client
+RUN npx prisma generate --schema=./prisma/schema.prisma
+
 # Build the application
 ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN npm run build
