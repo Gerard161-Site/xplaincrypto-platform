@@ -46,17 +46,17 @@ export default function DashboardClient() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900">
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b border-slate-700 bg-slate-800/80 backdrop-blur-sm">
+      <header className="sticky top-0 z-50 w-full border-b border-orange-500/20 bg-black/50 backdrop-blur-xl">
         <div className="container mx-auto max-w-6xl flex h-16 items-center justify-between px-4">
           <div className="flex items-center space-x-3">
-            <div className="p-2 bg-purple-600 rounded-lg">
+            <div className="gradient-bg p-2 rounded-lg">
               <Terminal className="h-5 w-5 text-white" />
             </div>
             <div>
-              <h1 className="text-lg font-semibold text-white">DevOps Orchestrator</h1>
-              <p className="text-xs text-slate-400">Multi-Agent System</p>
+              <h1 className="text-lg font-semibold text-white">Automotas AI</h1>
+              <p className="text-xs text-gray-400">Multi-Agent Orchestrator</p>
             </div>
           </div>
           
@@ -69,7 +69,7 @@ export default function DashboardClient() {
               variant="outline"
               size="sm"
               onClick={handleSignOut}
-              className="border-slate-600 hover:bg-slate-700"
+              className="border-orange-500/20 hover:bg-orange-500/10 hover:text-orange-400"
             >
               <LogOut className="h-4 w-4 mr-2" />
               Sign Out
@@ -83,23 +83,23 @@ export default function DashboardClient() {
         {/* Welcome Section */}
         <div className="text-center py-8">
           <h2 className="text-3xl font-bold text-white mb-2">
-            Welcome to the Orchestration Dashboard
+            Welcome to Automotas AI
           </h2>
-          <p className="text-slate-400 max-w-2xl mx-auto">
+          <p className="text-gray-400 max-w-2xl mx-auto">
             Manage and monitor your multi-agent workflows. Submit GitHub repositories for automated analysis, 
-            review, and deployment through our intelligent agent system.
+            review, and deployment through our intelligent orchestration system.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Workflow Form */}
-          <Card className="bg-slate-800/50 border-slate-700">
+          <Card className="card">
             <CardHeader>
               <CardTitle className="text-white flex items-center">
-                <Activity className="h-5 w-5 mr-2 text-purple-400" />
+                <Activity className="h-5 w-5 mr-2 text-orange-400" />
                 New Workflow
               </CardTitle>
-              <CardDescription className="text-slate-400">
+              <CardDescription className="text-gray-400">
                 Start a new multi-agent workflow by providing a GitHub repository
               </CardDescription>
             </CardHeader>
@@ -113,10 +113,10 @@ export default function DashboardClient() {
           </Card>
 
           {/* Progress Panel */}
-          <Card className="bg-slate-800/50 border-slate-700">
+          <Card className="card">
             <CardHeader>
               <CardTitle className="text-white">Real-time Progress</CardTitle>
-              <CardDescription className="text-slate-400">
+              <CardDescription className="text-gray-400">
                 Monitor active workflow progress and agent activities
               </CardDescription>
             </CardHeader>
@@ -127,10 +127,10 @@ export default function DashboardClient() {
         </div>
 
         {/* Workflow History */}
-        <Card className="bg-slate-800/50 border-slate-700">
+        <Card className="card">
           <CardHeader>
             <CardTitle className="text-white">Workflow History</CardTitle>
-            <CardDescription className="text-slate-400">
+            <CardDescription className="text-gray-400">
               Review past workflows and their results
             </CardDescription>
           </CardHeader>

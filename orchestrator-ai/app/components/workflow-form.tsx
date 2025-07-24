@@ -33,17 +33,14 @@ export function WorkflowForm({ onWorkflowStart, isLoading, setIsLoading }: Workf
     setIsLoading(true);
 
     try {
-      // Validate GitHub URL
       if (!formData.githubUrl.includes('github.com')) {
         throw new Error('Please provide a valid GitHub URL');
       }
 
-      // Validate prompt for prompt-driven mode
       if (formData.mode === 'prompt-driven' && !formData.prompt?.trim()) {
         throw new Error('Prompt is required for prompt-driven mode');
       }
 
-      // Map frontend field names to backend API field names
       const apiData = {
         repository_url: formData.githubUrl,
         task_prompt: formData.mode === 'prompt-driven' ? formData.prompt : 'Analyze and understand this repository',
@@ -61,7 +58,6 @@ export function WorkflowForm({ onWorkflowStart, isLoading, setIsLoading }: Workf
       const result = await response.json();
       
       if (result.success) {
-        // Handle the backend response format
         const workflowId = result.workflow_id || 'unknown';
         const workflow: Workflow = {
           id: workflowId,
@@ -76,14 +72,13 @@ export function WorkflowForm({ onWorkflowStart, isLoading, setIsLoading }: Workf
         };
         onWorkflowStart(workflow);
         
-        // Reset form
         setFormData({
           githubUrl: '',
           prompt: '',
           mode: 'self-contained',
         });
         
-        toast.success('Workflow started! ID: ' + workflowId);
+        toast.success(`Workflow started! ID: ${workflowId}`);
       } else {
         throw new Error(result.error || 'Failed to start workflow');
       }
@@ -182,7 +177,7 @@ export function WorkflowForm({ onWorkflowStart, isLoading, setIsLoading }: Workf
       <Button
         type="submit"
         disabled={isLoading}
-        className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+        className="w-full btn-primary"
       >
         {isLoading ? (
           <>
