@@ -81,6 +81,34 @@ test_data:
         priority: "high"
         tags: ["testing", "validation", "comprehensive"]
 
+  # Context Engineering test data
+  context_engineering:
+    - query: "How to implement comprehensive testing for FastAPI applications?"
+      context_type: "technical_documentation"
+      expected_sources: ["documentation", "code_examples", "best_practices"]
+    
+    - query: "Security best practices for API authentication"
+      context_type: "security_guidelines"
+      expected_sources: ["security_frameworks", "compliance_docs"]
+    
+    - query: "Performance optimization techniques for Python applications"
+      context_type: "performance_guidance"
+      expected_sources: ["performance_docs", "optimization_guides"]
+
+  # Performance Analytics test data
+  performance_analytics:
+    - metric_type: "response_time"
+      time_range: "24h"
+      aggregation: "average"
+    
+    - metric_type: "throughput"
+      time_range: "1h"
+      aggregation: "sum"
+    
+    - metric_type: "error_rate"
+      time_range: "12h"
+      aggregation: "percentage"
+
 # Expected endpoints for validation
 expected_endpoints:
   agents:
@@ -108,6 +136,26 @@ expected_endpoints:
     - "POST /api/documents/processing/reprocess-all"
     - "GET /api/documents/analytics/overview"
     - "GET /api/documents/analytics/search-patterns"
+
+  context_engineering:
+    - "GET /api/context/stats"
+    - "POST /api/context/initialize"
+    - "GET /api/context/patterns"
+    - "POST /api/context/query"
+    - "GET /api/context/sources"
+    - "GET /api/context/embeddings/stats"
+    - "GET /api/context/retrieval/metrics"
+    - "POST /api/context/embeddings/generate"
+
+  performance_analytics:
+    - "GET /api/system/metrics"
+    - "GET /api/system/performance/dashboard"
+    - "GET /api/system/performance/realtime"
+    - "GET /api/analytics/performance"
+    - "GET /api/analytics/system/overview"
+    - "GET /api/metrics/response-times"
+    - "GET /api/metrics/throughput"
+    - "GET /api/system/health/detailed"
 
 # Performance thresholds
 performance:
