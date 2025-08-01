@@ -13,14 +13,14 @@ export default function HeroSection() {
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-5xl text-center">
           {/* Hero Headline - Single line with reduced font size */}
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
+          <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl xl:text-6xl">
             <span className="block whitespace-nowrap">
               Automatos AI: Stop Fighting Your AI Agents
             </span>
           </h1>
           
           {/* Hero Description - Reduced font size */}
-          <p className="mx-auto mt-8 max-w-4xl text-lg leading-relaxed text-slate-300 sm:text-xl lg:text-xl xl:text-xl">
+          <p className="mx-auto mt-8 max-w-4xl text-base leading-relaxed text-slate-300 sm:text-lg lg:text-lg xl:text-lg">
             Built for developers tired of agents that lose context, fabricate results, and require constant re-explanation. 
             The open-source multi-agent orchestration platform that combines advanced context engineering with persistent memory. 
             Build, deploy, and scale intelligent workflows that learn from and adapt to your infrastructure.
