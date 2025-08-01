@@ -15,7 +15,7 @@ export default function HeroSection() {
           {/* Hero Headline - Single line with reduced font size */}
           <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl xl:text-6xl">
             <span className="block whitespace-nowrap">
-              Automatos AI: Stop Fighting Your AI Agents
+              <span className="text-orange-500">Automatos AI</span>: Stop Fighting Your AI Agents
             </span>
           </h1>
           
