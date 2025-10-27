@@ -1,0 +1,95 @@
+# Automotas AI Journey Testing Configuration
+
+# API Configuration
+api:
+  base_url: "http://localhost:8000"
+  fallback_urls:
+    - "http://api.automatos.app"
+    - "http://206.81.0.227:8000"
+  
+  authentication:
+    api_key: "test_api_key_for_backend_validation_2025"
+    headers:
+      Content-Type: "application/json"
+      X-API-Key: "test_api_key_for_backend_validation_2025"
+      Authorization: "Bearer test_api_key_for_backend_validation_2025"
+
+# Testing Configuration
+testing:
+  timeouts:
+    default_request_timeout: 30
+    health_check_timeout: 10
+    workflow_timeout: 300
+  
+  retry_settings:
+    max_retries: 3
+    retry_delay: 1.0
+  
+  performance_thresholds:
+    acceptable_response_time_ms: 5000
+    warning_response_time_ms: 2000
+    critical_response_time_ms: 10000
+
+# Journey Configuration
+journeys:
+  agent_management:
+    enabled: true
+    max_agents_to_create: 5
+    test_agent_types:
+      - "code_architect"
+      - "security_expert"
+      - "performance_optimizer"
+      - "data_analyst"
+    
+  workflow_management:
+    enabled: true
+    max_workflows_to_create: 3
+    test_timeout_minutes: 10
+    
+  document_management:
+    enabled: true
+    max_documents_to_upload: 5
+    test_file_types:
+      - "txt"
+      - "md"
+      - "json"
+    
+  context_engineering:
+    enabled: true
+    test_embeddings: true
+    test_retrieval: true
+    
+  performance_analytics:
+    enabled: true
+    collect_detailed_metrics: true
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "json"
+  console_output: true
+  file_output: true
+  log_directory: "~/automotas_tests/logs"
+  
+  retention:
+    keep_logs_days: 30
+    max_log_files: 100
+
+# Cleanup Configuration
+cleanup:
+  auto_cleanup: true
+  cleanup_on_failure: true
+  preserve_failed_test_data: false
+  confirmation_required: false
+
+# Error Handling
+error_handling:
+  continue_on_warning: true
+  continue_on_non_critical_failure: true
+  fail_fast_on_critical_error: true
+  
+  expected_failures:
+    - endpoint: "/invalid_endpoint"
+      expected_status: 404
+    - data_validation: "empty_name"
+      expected_status: 422
